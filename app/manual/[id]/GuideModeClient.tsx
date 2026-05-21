@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import WorkspaceSidebar from '@/components/layout/WorkspaceSidebar'
 import * as Icon from '@/components/icons'
 import type { MmManual, MmStep } from '@/types'
@@ -43,6 +44,7 @@ function AutoSaveBadge({ saving, saved }: { saving: boolean; saved: boolean }) {
   return null
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function GuideModeClient({ manual, steps: initialSteps, user, usage }: Props) {
   const router = useRouter()
   const [steps, setSteps] = useState<MmStep[]>(initialSteps)
@@ -72,7 +74,7 @@ export default function GuideModeClient({ manual, steps: initialSteps, user, usa
   const toggleSelect = (id: string) => {
     setSelected(prev => {
       const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
+      if (next.has(id)) { next.delete(id) } else { next.add(id) }
       return next
     })
   }
@@ -359,7 +361,7 @@ function StepCard({ step, index, isActive, isSelected, onSelect, onToggleCheck, 
 
         {step.screenshot_url && (
           <div style={{ position: 'relative', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--mm-border)', aspectRatio: '16/9', background: '#1F2937' }}>
-            <img src={step.screenshot_url} alt={step.title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }}/>
+            <Image src={step.screenshot_url} alt={step.title || ''} fill style={{ objectFit: 'cover' }}/>
           </div>
         )}
       </div>

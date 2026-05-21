@@ -73,9 +73,10 @@ function LoginForm() {
 
   async function handleGoogle() {
     const supabase = createClient()
+    const origin = window.location.origin
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?next=${next}` },
+      options: { redirectTo: `${origin}/auth/callback?next=${next}` },
     })
   }
 
